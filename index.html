@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Warg: Animal Lives</title>
+	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+	<script src="js/libs/dat.gui.min.js"></script>
+	<link href="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.css" rel="stylesheet">
+	<script src="https://api.mapbox.com/mapbox-gl-js/v2.11.0/mapbox-gl.js"></script>
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<body>
+	<div id="pageOverlay"></div>
+	<!-- https://docs.mapbox.com/mapbox-gl-js/example/flyto-options/ -->
+	<div id="map"></div>
+	<div id="timeDisplay" class="display"></div>
+	<div id="progressDisplay" class="display"></div>
+	<div id="distanceDisplay" class="display"></div>
+	<!------------------------------>
+    <!-- Token Submit Form Popup  -->
+    <!------------------------------>
+    <div id="tokenPopup" class="popup">
+      <div id="token_title" class="title">Mapbox Token</div>
+      <form id="tokenForm">
+        <input id="token" type="password" placeholder="Your Mapbox Token, Please" />
+        <input id="submitToken" type="submit" />
+      </form>
+    </div>
+    <!------------------------------------>
+    <!-- Button to Trigger Flight Start -->
+    <!------------------------------------>
+	<br>
+	<button id="fly">Fly</button>
+	<!------------->
+	<!-- DATASET -->
+	<!------------->
+	<script src="data/bats.js"></script>
+	<!--------------------->
+	<!-- JAVASCRIPT CODE -->
+	<!--------------------->
+	<script src="js/config.js"></script>
+	<script src="js/token.popup.js"></script>
+	<script src="js/controls/controls.js"></script>
+	<script src="js/flying/utilities.js"></script>
+	<script src="js/flying/flying.js"></script>
+	<script src="js/map/map.js"></script>
+</body>
+</html>
