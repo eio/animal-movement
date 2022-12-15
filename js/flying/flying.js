@@ -96,6 +96,10 @@ function flyToWaypoint(i, flight_time, waypoints, prev_latlon=null) {
 			map.flyTo(action);
 			// Increment counter
 			i += window.GUI_STATE.step;
+			// Don't exceed waypoint count
+			if (i > n_waypoints - 1) {
+				i = n_waypoints - 1
+			}
 			window.WAYPOINT_GUI.setValue(i);
 			var progress = "Waypoint: " + i + "/" + n_waypoints;
 			document.getElementById("progressDisplay").innerHTML = progress;
