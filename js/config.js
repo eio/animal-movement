@@ -7,5 +7,5 @@ window.FLYING = false;
 window.PITCH = 70;
 window.ZOOM = 14.5;
 // Get the unique bat IDs:
-window.BAT_IDS = Object.keys(BATS).sort();
-console.log("Bats:", BAT_IDS);
+window.BAT_IDS = Object.keys(window.BATS).sort();
+console.log("Bats:", window.BAT_IDS);
