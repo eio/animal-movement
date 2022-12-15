@@ -12,34 +12,6 @@ body {
 	bottom: 0;
 	width: 100%;
 }
-#fly {
-	display: none;
-	cursor: pointer;
-	position: relative;
-	margin: 0px auto;
-	width: 8%;
-	height: 40px;
-	padding: 10px;
-	font-size: 12px;
-	text-align: center;
-	color: #fff;
-	background: rgba(0,0,0,0);
-	border: 1px solid #fff;
-	border-radius: 3px;
-	opacity: 0.3;
-}
-#fly:hover {
-	opacity: 0.8;
-	color: #000;
-	background: #fff;
-	border: 1px solid #000;
-}
-#fly:active {
-	opacity: 1.0;
-	color: #f0f0f0;
-	background: #22293d;
-	border: 1px solid #000;
-}
 .display {
 	position: absolute;
 	left: 0;

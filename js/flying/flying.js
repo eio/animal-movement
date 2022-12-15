@@ -1,18 +1,18 @@
-document.getElementById('fly').addEventListener('click', () => {
+function toggleFlight() {
 	if (window.FLYING == false) {
 		// Do it.
 		startFlight(window.GUI_STATE.bat);
-		document.getElementById('fly').innerHTML = "Stop";
+		window.FLY_TOGGLE_GUI.name("Stop Movement");
 		window.FLYING = true;
 	} else {
 		// Stop it.
 		stopFlight();
 	}
-});
+}
 
 function stopFlight() {
 	clearTimeout(window.TIMEOUT);
-	document.getElementById('fly').innerHTML = "Fly";
+	window.FLY_TOGGLE_GUI.name("Start Movement");
 	window.FLYING = false;
 	console.log("Thank you for flying.")
 }

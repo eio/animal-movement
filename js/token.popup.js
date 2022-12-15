@@ -34,8 +34,6 @@ function handle_submitted_token() {
     document.getElementById('pageOverlay').style.display = 'none';
     document.getElementById('pageOverlay').style.animation = 'none';
     document.getElementById('pageOverlay').style.background = 'none';
-    // show the Fly button
-    document.getElementById('fly').style.display = 'block';
     // start it up
     if (window.GUI_STATE == null) {
         loadMap();
