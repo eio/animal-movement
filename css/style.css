@@ -16,9 +16,8 @@ body {
 	position: absolute;
 	left: 0;
 	padding: 10px;
-	font-style: bold;
 	font-family: monospace;
-	font-size: 20px;
+	font-size: 18px;
 }
 #timeDisplay { 
 	top: 0;
@@ -29,6 +28,11 @@ body {
 #distanceDisplay {
 	top: 40px;
 }
+#taxonDisplay {
+	top: 60px;
+	font-size: 16px;
+}
+
 #pageOverlay {
 	display: block;
 	position: fixed;

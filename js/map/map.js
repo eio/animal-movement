@@ -2,10 +2,10 @@ function loadMap() {
 	console.log("Loading map...")
 	// TO MAKE THE MAP APPEAR YOU MUST ADD YOUR ACCESS TOKEN FROM
 	// https://account.mapbox.com
-	mapboxgl.accessToken = TOKEN;
+	mapboxgl.accessToken = window.TOKEN;
 	// These options control the camera position after animation
 	const start = {
-		center: [80, 36],
+		center: [-42, 42],
 		zoom: 1,
 		pitch: 0,
 		bearing: 0

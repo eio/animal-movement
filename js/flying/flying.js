@@ -1,8 +1,8 @@
 function toggleFlight() {
 	if (window.FLYING == false) {
 		// Do it.
-		startFlight(window.GUI_STATE.bat);
-		window.FLY_TOGGLE_GUI.name("Stop Movement");
+		startFlight(window.GUI_STATE.animal);
+		window.FLY_TOGGLE_GUI.name(window.STOP_BUTTON_TEXT);
 		window.FLYING = true;
 	} else {
 		// Stop it.
@@ -12,14 +12,14 @@ function toggleFlight() {
 
 function stopFlight() {
 	clearTimeout(window.TIMEOUT);
-	window.FLY_TOGGLE_GUI.name("Start Movement");
+	window.FLY_TOGGLE_GUI.name(window.START_BUTTON_TEXT);
 	window.FLYING = false;
-	console.log("Thank you for flying.")
+	console.log(window.THANK_YOU_TEXT)
 }
 
-function startFlight(bat) {
-	console.log("Selected Bat:", bat);
-	var positions = BATS[bat];
+function startFlight(animalID) {
+	console.log("Selected Animal:", animalID);
+	var positions = window.ANIMALS[animalID];
 	var waypoints = getTimeOrderedWaypoints(positions);
 	var n_waypoints = waypoints.length;
 	// Set the waypoint GUI maximum value to the lenght of waypoints list
@@ -44,28 +44,41 @@ function flyToAllWaypoints(waypoints, flight_time) {
 	flyToWaypoint(start_index, flight_time, waypoints);
 }
 
+function updateDisplays(animal) {
+	// var speed = bat["ground-speed"];
+	// var height = bat["height-above-msl"];
+	var timestamp = animal["timestamp"].replace(".000","");
+	document.getElementById("timeDisplay").innerHTML = timestamp;
+	// var distance = animal["km-traveled"];
+	// var traveled = "Traveled: " + distance.toFixed(2) + " km";
+	// document.getElementById("distanceDisplay").innerHTML = traveled;
+}
+
+function updateTaxon(taxon) {
+	var common_name = window.TAXON_MAP[taxon];
+	var text = [common_name, "<br>", "<i>(", taxon, ")</i>"].join("");
+	document.getElementById("taxonDisplay").innerHTML = text;
+}
+
 function flyToWaypoint(i, flight_time, waypoints, prev_latlon=null) {
+	var first_wp = waypoints[0];
+	var taxon = first_wp["individual-taxon-canonical-name"];
+	updateTaxon(taxon);
 	var n_waypoints = waypoints.length;
 	// Start stepping through the ordered waypoints list:
 	window.TIMEOUT = setTimeout(function() {
 		i = window.GUI_STATE.waypoint;
 		if (i < n_waypoints - 1) {
-			var bat = waypoints[i];
-			var timestamp = bat["timestamp"].replace(".000","");
-			// var speed = bat["ground-speed"];
-			document.getElementById("timeDisplay").innerHTML = timestamp;
-			var latitude = parseFloat(bat["location-lat"]);
-			var longitude = parseFloat(bat["location-long"]);
-			var height = bat["height-above-msl"];
+			var animal = waypoints[i];
+			var latitude = parseFloat(animal["location-lat"]);
+			var longitude = parseFloat(animal["location-long"]);
+			updateDisplays(animal)
 			var lonlat = [longitude, latitude];
 			// Figure out where the bat goes next
-			var bat_next = waypoints[i + 1];
-			var destLat = bat_next["location-lat"];
-			var destLng = bat_next["location-long"];
+			var next_animal = waypoints[i + 1];
+			var destLat = next_animal["location-lat"];
+			var destLng = next_animal["location-long"];
 			var bearing = getBearing(latitude, longitude, destLat, destLng);
-			// var distance = bat["km-traveled"];
-			// var traveled = "Traveled: " + distance.toFixed(2) + " km";
-			// document.getElementById("distanceDisplay").innerHTML = traveled;
 			var target = {
 				"center": lonlat,
 				"zoom": window.ZOOM, // getZoom(height)
