@@ -10,16 +10,10 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
+    <!----------------------------->
+    <!-- Initial Page Background -->
+    <!----------------------------->
     <div id="pageOverlay"></div>
-    <!-- https://docs.mapbox.com/mapbox-gl-js/example/flyto-options/ -->
-    <div id="map"></div>
-    <!---------------------------->
-    <!-- Top Left Details Text  -->
-    <!---------------------------->
-    <div id="timeDisplay" class="display"></div>
-    <div id="progressDisplay" class="display"></div>
-    <div id="distanceDisplay" class="display"></div>
-    <div id="taxonDisplay" class="display"></div>
     <!------------------------------>
     <!-- Token Submit Form Popup  -->
     <!------------------------------>
@@ -30,9 +24,20 @@
         <input id="submitToken" type="submit" />
       </form>
     </div>
-    <!------------->
-    <!-- DATASET -->
-    <!------------->
+    <!-------------------->
+    <!-- Map Container  -->
+    <!-------------------->
+    <div id="map"></div>
+    <!---------------------------->
+    <!-- Top Left Details Text  -->
+    <!---------------------------->
+    <div id="timeDisplay" class="display"></div>
+    <div id="progressDisplay" class="display"></div>
+    <div id="distanceDisplay" class="display"></div>
+    <div id="taxonDisplay" class="display"></div>
+    <!-------------->
+    <!-- DATASETS -->
+    <!-------------->
     <script src="data/json/BATS.js"></script>
     <script src="data/json/CUCKOOS.js"></script>
     <script src="data/json/DOVES.js"></script>
