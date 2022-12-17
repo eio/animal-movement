@@ -32,14 +32,38 @@ https://www.movebank.org/cms/webapp?gwt_fragment=page=studies,path=study15421555
 	Grants Used: Wildlife science and conservation center of Mongolia and MPIAB
 	Principal Investigator Name: Nyambayar Batbayar
 
-# Dataset 3: Tortoises
+# Dataset 3: Turtle Doves
 
-https://www.movebank.org/cms/webapp?gwt_fragment=page=studies,path=study1541892445
+https://www.movebank.org/cms/webapp?gwt_fragment=page=studies,path=study1542192442
 
-	Name: ICARUS Galapagos tortoises
-	License Type: CC0
-	License Terms: Creative Commons 1.0 Universal (CC0)
-	Citation: Galapagos Tortoise Movement Ecology and MPIAB
-	Acknowledgements: Galapagos Tortoise Movement Ecology and MPIAB
-	Grants Used: Galapagos Tortoise Movement Ecology and MPIAB
-	Principal Investigator Name: Stephen Blake
+	Study Statistics
+	Number of Animals	23
+	Number of Tags	40
+	Number of Deployments	23
+	Time of First Deployed Location	2021-05-21 11:01:00.000
+	Time of Last Deployed Location	2022-02-28 11:51:00.000
+	Taxa	Streptopelia turtur
+	Number of Deployed Locations	1402
+
+# Dataset 4: Sea Birds
+
+https://www.movebank.org/cms/webapp?gwt_fragment=page=studies,path=study1531481854
+
+	Study Statistics
+	Number of Animals	140
+	Number of Tags	153
+	Number of Deployments	141
+	Time of First Deployed Location	2021-05-19 01:00:00.000
+	Time of Last Deployed Location	2022-03-01 12:18:00.000
+	Taxa	Sula dactylatra, Sula leucogaster, Fregata aquila, Phaethon aethereus, Onychoprion fuscatus
+	Number of Deployed Locations	9726
+
+# Other Datasets:
+
+Flying Fox (145262 waypoints): https://www.movebank.org/cms/webapp?gwt_fragment=page=studies,path=study1077432441
+
+Arctic Fox (1125233 waypoints): https://www.movebank.org/cms/webapp?gwt_fragment=page=studies,path=study1241071371
+
+Swamp Wallabies (22948 waypoints): https://www.movebank.org/cms/webapp?gwt_fragment=page=studies,path=study268904527
+
+
