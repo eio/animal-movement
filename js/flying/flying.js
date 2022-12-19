@@ -19,8 +19,9 @@ function stopFlight() {
 
 function startFlight(animalID) {
 	console.log("Selected Animal:", animalID);
-	var positions = window.ANIMALS[animalID];
-	var waypoints = getTimeOrderedWaypoints(positions);
+	var animal = window.ANIMALS[animalID];
+	updateTaxonDisplay(animal);
+	var waypoints = getTimeOrderedWaypoints(animal);
 	var n_waypoints = waypoints.length;
 	// Set the waypoint GUI maximum value to the lenght of waypoints list
 	console.log("Waypoints:", n_waypoints);
@@ -47,26 +48,20 @@ function flyToAllWaypoints(waypoints, flight_time) {
 	flyToWaypoint(start_index, flight_time, waypoints);
 }
 
-function updateDisplays(animal) {
-	// var speed = bat["ground-speed"];
-	// var height = bat["height-above-msl"];
+function updateTimeDisplay(animal) {
 	var timestamp = animal.properties[window.TIMESTAMP_KEY].replace(".000","");
 	document.getElementById("timeDisplay").innerHTML = timestamp;
-	// var distance = animal["km-traveled"];
-	// var traveled = "Traveled: " + distance.toFixed(2) + " km";
-	// document.getElementById("distanceDisplay").innerHTML = traveled;
 }
 
-function updateTaxon(taxon) {
+function updateTaxonDisplay(animal) {
+	var first_record = animal[0];
+	var taxon = first_record.properties[window.TAXON_KEY];
 	var common_name = window.TAXON_MAP[taxon];
 	var text = [common_name, "<br>", "<i>(", taxon, ")</i>"].join("");
 	document.getElementById("taxonDisplay").innerHTML = text;
 }
 
 function flyToWaypoint(i, flight_time, waypoints, prev_latlon=null) {
-	var first_wp = waypoints[0];
-	var taxon = first_wp.properties[window.TAXON_KEY];
-	updateTaxon(taxon);
 	var n_waypoints = waypoints.length;
 	// Start stepping through the ordered waypoints list:
 	window.TIMEOUT = setTimeout(function() {
@@ -95,7 +90,7 @@ function flyToWaypoint(i, flight_time, waypoints, prev_latlon=null) {
 			// Perform the map action
 			window.MAP.flyTo(action);
 			// Update the displays
-			updateDisplays(animal);
+			updateTimeDisplay(animal);
 			// Increment counter
 			i += window.GUI_STATE.step;
 			// Don't exceed waypoint count
