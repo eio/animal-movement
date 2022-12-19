@@ -20,16 +20,20 @@ function stopFlight() {
 function startFlight(animalID) {
 	console.log("Selected Animal:", animalID);
 	var animal = window.ANIMALS[animalID];
+	// Update taxon display in top left
 	updateTaxonDisplay(animal);
+	// Order the waypoints chronologically
 	var waypoints = getTimeOrderedWaypoints(animal);
+	// Get the total number of waypoints in this voyage
 	var n_waypoints = waypoints.length;
-	// Set the waypoint GUI maximum value to the lenght of waypoints list
 	console.log("Waypoints:", n_waypoints);
+	// Set the waypoint GUI maximum value to the lenght of waypoints list
 	window.WAYPOINT_GUI.max(n_waypoints);
 	// Reset waypoint to starting position
 	window.WAYPOINT_GUI.setValue(0);
-	// Clear map and add new markers
+	// Clear all map markers
 	clearMapMarkers();
+	// Add map markers for all waypoints in this voyage
 	addMapMarkers(waypoints);
 	// Start the flight action:
 	flyToAllWaypoints(waypoints, FLIGHT_TIME);
@@ -89,7 +93,7 @@ function flyToWaypoint(i, flight_time, waypoints, prev_latlon=null) {
 			};
 			// Perform the map action
 			window.MAP.flyTo(action);
-			// Update the displays
+			// Update the time display in top left
 			updateTimeDisplay(animal);
 			// Increment counter
 			i += window.GUI_STATE.step;
