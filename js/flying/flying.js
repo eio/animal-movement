@@ -27,6 +27,9 @@ function startFlight(animalID) {
 	window.WAYPOINT_GUI.max(n_waypoints);
 	// Reset waypoint to starting position
 	window.WAYPOINT_GUI.setValue(0);
+	// Clear map and add new markers
+	clearMapMarkers();
+	addMapMarkers(waypoints);
 	// Start the flight action:
 	flyToAllWaypoints(waypoints, FLIGHT_TIME);
 }
@@ -39,7 +42,7 @@ function getTimeOrderedWaypoints(positions) {
 }
 
 function flyToAllWaypoints(waypoints, flight_time) {
-	console.log("Begin journey.")
+	console.log("Begin voyage.")
 	var start_index = 0;
 	flyToWaypoint(start_index, flight_time, waypoints);
 }
@@ -47,7 +50,7 @@ function flyToAllWaypoints(waypoints, flight_time) {
 function updateDisplays(animal) {
 	// var speed = bat["ground-speed"];
 	// var height = bat["height-above-msl"];
-	var timestamp = animal["timestamp"].replace(".000","");
+	var timestamp = animal.properties[window.TIMESTAMP_KEY].replace(".000","");
 	document.getElementById("timeDisplay").innerHTML = timestamp;
 	// var distance = animal["km-traveled"];
 	// var traveled = "Traveled: " + distance.toFixed(2) + " km";
@@ -62,7 +65,7 @@ function updateTaxon(taxon) {
 
 function flyToWaypoint(i, flight_time, waypoints, prev_latlon=null) {
 	var first_wp = waypoints[0];
-	var taxon = first_wp["individual-taxon-canonical-name"];
+	var taxon = first_wp.properties[window.TAXON_KEY];
 	updateTaxon(taxon);
 	var n_waypoints = waypoints.length;
 	// Start stepping through the ordered waypoints list:
@@ -70,15 +73,12 @@ function flyToWaypoint(i, flight_time, waypoints, prev_latlon=null) {
 		i = window.GUI_STATE.waypoint;
 		if (i < n_waypoints - 1) {
 			var animal = waypoints[i];
-			var latitude = parseFloat(animal["location-lat"]);
-			var longitude = parseFloat(animal["location-long"]);
-			updateDisplays(animal)
-			var lonlat = [longitude, latitude];
+			var lonlat = animal.geometry.coordinates;
+			addCurrentMapMarker(lonlat, animal.properties);
 			// Figure out where the bat goes next
 			var next_animal = waypoints[i + 1];
-			var destLat = next_animal["location-lat"];
-			var destLng = next_animal["location-long"];
-			var bearing = getBearing(latitude, longitude, destLat, destLng);
+			var next_lonlat = next_animal.geometry.coordinates;
+			var bearing = getBearing(lonlat[1], lonlat[0], next_lonlat[1], next_lonlat[0]);
 			var target = {
 				"center": lonlat,
 				"zoom": window.ZOOM, // getZoom(height)
@@ -93,7 +93,9 @@ function flyToWaypoint(i, flight_time, waypoints, prev_latlon=null) {
 								// respect to prefers-reduced-motion
 			};
 			// Perform the map action
-			map.flyTo(action);
+			window.MAP.flyTo(action);
+			// Update the displays
+			updateDisplays(animal);
 			// Increment counter
 			i += window.GUI_STATE.step;
 			// Don't exceed waypoint count

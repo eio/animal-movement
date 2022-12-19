@@ -9,7 +9,27 @@ window.FLYING = false;
 // Mapbox 3D parameters
 window.PITCH = 70;
 window.ZOOM = 14.5;
-// function to get all taxa options
+// Keep track of markers on the map
+window.MAP_MARKERS = [];
+window.CURRENT_MARKER = null;
+// Data field names
+window.ID_KEY = "individual-local-identifier"
+window.TAXON_KEY = "individual-taxon-canonical-name"
+window.TIMESTAMP_KEY = "timestamp"
+// Create lookup dictionary of common names
+window.TAXON_MAP = {
+	"Tadarida teniotis": "European free-tailed bat",
+	"Gallinago gallinago": "Common snipe",
+	"Cuculus canorus": "Common cuckoo",
+	"Streptopelia turtur": "Turtle dove",
+	"Fregata aquila": "Ascension frigatebird",
+	"Phaethon aethereus": "Red-billed tropicbird",
+	"Onychoprion fuscatus": "Sooty tern",
+}
+// window.UNSPECIFIED = "unspecified";
+// window.TAXON_MAP[window.UNSPECIFIED] = window.UNSPECIFIED
+
+// Function to get all taxa options
 function getTaxaInfo(datasets) {
 	window.TAXA = {}
 	for(var d=0; d<datasets.length; d++) {
@@ -17,11 +37,12 @@ function getTaxaInfo(datasets) {
 		for (const [identity, records] of Object.entries(data)) {
 			for (var i=0; i<records.length; i++) {
 				var row = records[i];
-				var ident = row["individual-local-identifier"];
-				var taxon = row["individual-taxon-canonical-name"];
-				if (taxon == "") {
+				var ident = row.properties[window.ID_KEY];
+				var taxon = row.properties[window.TAXON_KEY];
+				// Skip / hide taxa that aren't in the global taxon map
+				if (!(taxon in window.TAXON_MAP)) {
 					// taxon = window.UNSPECIFIED;
-					continue; // skip records without taxon label
+					continue;
 				}
 				if (!window.TAXA[taxon]) {
 					// initialize list of individuals for this taxon
@@ -59,17 +80,3 @@ window.ANIMAL_IDS = window.BAT_IDS.concat(
 window.ANIMALS = Object.assign({}, BATS, CUCKOOS)
 window.ANIMALS = Object.assign({}, window.ANIMALS, DOVES)
 window.ANIMALS = Object.assign({}, window.ANIMALS, SEABIRDS)
-// Create lookup dictionary of common names
-window.TAXON_MAP = {
-	"Tadarida teniotis": "European free-tailed bat",
-	"Gallinago gallinago": "Common snipe",
-	"Cuculus canorus": "Common cuckoo",
-	"Streptopelia turtur": "Turtle dove",
-	"Sula dactylatra": "Masked booby",
-	"Sula leucogaster": "Brown booby",
-	"Fregata aquila": "Ascension frigatebird",
-	"Phaethon aethereus": "Red-billed tropicbird",
-	"Onychoprion fuscatus": "Sooty tern",
-}
-// window.UNSPECIFIED = "unspecified";
-// window.TAXON_MAP[window.UNSPECIFIED] = window.UNSPECIFIED

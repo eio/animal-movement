@@ -10,13 +10,13 @@ function loadMap() {
 		pitch: 0,
 		bearing: 0
 	};
-	window.map = new mapboxgl.Map({
+	window.MAP = new mapboxgl.Map({
 		container: 'map',
 		// Choose from Mapbox's core styles, or make your own style with Mapbox Studio
 		style: 'mapbox://styles/mapbox/satellite-streets-v12',
 		...start
 	});
-	map.on('style.load', () => {
+	window.MAP.on('style.load', () => {
 		// Custom atmosphere styling
 		// map.setFog({
 		// // 'color': 'rgb(220, 159, 159)', // Pink fog / lower atmosphere
@@ -24,11 +24,11 @@ function loadMap() {
 		// 'high-color': 'rgb(36, 92, 223)', // Blue sky / upper atmosphere
 		// 'horizon-blend': 0.4 // Exaggerate atmosphere (default is .1)
 		// });
-		map.addSource('mapbox-dem', {
+		window.MAP.addSource('mapbox-dem', {
 		'type': 'raster-dem',
 		'url': 'mapbox://mapbox.terrain-rgb'
 		});
-		map.setTerrain({
+		window.MAP.setTerrain({
 		'source': 'mapbox-dem',
 		// 'exaggeration': 1.5
 		});

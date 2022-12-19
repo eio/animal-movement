@@ -1,0 +1,38 @@
+#map { 
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	width: 100%;
+}
+/* marker used for full voyage waypoints (blue dots) */
+.marker {
+	background-color: rgba(100,150,255,0.3);
+	border: 2px solid rgba(255,255,255,0.4);
+	width: 17px;
+	height: 17px;
+	border-radius: 50%;
+	cursor: pointer;
+}
+/* marker used for current waypoint (yellow frame) */
+.current-marker {
+	background-color: rgba(255,215,0,0.2);
+	border: 2px solid rgba(255,215,0,0.8);
+	width: 30px;
+	height: 30px;
+	border-radius: 20%;
+	cursor: pointer;
+}
+/********************/
+/* Map Marker Popup */
+/********************/
+.mapboxgl-popup-content {
+	background: rgba(255,255,255,0.9);
+	border-radius: 2%;
+}
+.mapboxgl-popup-close-button {
+	color: rgba(180,0,0,1);
+	box-shadow: none;
+}
+.mapboxgl-popup-close-button:hover {
+	color: rgba(180,0,0,1);
+}

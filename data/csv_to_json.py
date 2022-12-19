@@ -3,26 +3,46 @@ import json
 import argparse
 from math import pi, sin, cos, atan2, sqrt
 
-# Converts from degrees to radians.
-def toRadians(degrees):
-    return degrees * pi / 180
+# # Converts from degrees to radians.
+# def toRadians(degrees):
+#     return degrees * pi / 180
 
 
-# https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
-# This function takes in latitude and longitude of two locations
-# and returns the distance between them as the crow flies (in km)
-def getDistance(lat1, lon1, lat2, lon2):
-    R = 6371  # km
-    dLat = toRadians(lat2 - lat1)
-    dLon = toRadians(lon2 - lon1)
-    lat1 = toRadians(lat1)
-    lat2 = toRadians(lat2)
-    a = sin(dLat / 2) * sin(dLat / 2) + sin(dLon / 2) * sin(dLon / 2) * cos(lat1) * cos(
-        lat2
-    )
-    c = 2 * atan2(sqrt(a), sqrt(1 - a))
-    d = R * c
-    return d
+# # https://stackoverflow.com/questions/18883601/function-to-calculate-distance-between-two-coordinates
+# # This function takes in latitude and longitude of two locations
+# # and returns the distance between them as the crow flies (in km)
+# def getDistance(lat1, lon1, lat2, lon2):
+#     R = 6371  # km
+#     dLat = toRadians(lat2 - lat1)
+#     dLon = toRadians(lon2 - lon1)
+#     lat1 = toRadians(lat1)
+#     lat2 = toRadians(lat2)
+#     a = sin(dLat / 2) * sin(dLat / 2) + sin(dLon / 2) * sin(dLon / 2) * cos(lat1) * cos(
+#         lat2
+#     )
+#     c = 2 * atan2(sqrt(a), sqrt(1 - a))
+#     d = R * c
+#     return d
+
+
+def getHeight(animal):
+    height = None
+    if "height-above-ellipsoid" in animal:
+        height = animal["height-above-ellipsoid"]
+    elif "height-above-msl" in animal:
+        height = animal["height-above-msl"]
+    return height
+
+
+def getGeoJSON(lat, lon, animal):
+    return {
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [float(lon), float(lat)],
+        },
+        "properties": animal,
+    }
 
 
 if __name__ == "__main__":
@@ -43,6 +63,7 @@ if __name__ == "__main__":
     with open(filename, "r") as csvfile:
         animal_reader = csv.DictReader(csvfile)
         animals = {}
+        geojson = {}
         data = []
         for animal in animal_reader:
             data.append(animal)
@@ -52,6 +73,8 @@ if __name__ == "__main__":
         total_distance = 0
         for i in range(0, len(data)):
             animal = data[i]
+            # output object is stored under animal ID
+            identity = animal["individual-local-identifier"]
             lat = animal["location-lat"]
             lon = animal["location-long"]
             if lat == "" or lon == "":
@@ -60,6 +83,9 @@ if __name__ == "__main__":
                 continue
             else:
                 last_valid_i = i
+                # make sure this doesn't mess values up
+                lat = float(lat)
+                lon = float(lon)
             # if i == 0:
             #     # initialization
             #     animal["km-traveled"] = 0
@@ -75,8 +101,7 @@ if __name__ == "__main__":
             #     )
             #     total_distance = total_distance + distance
             #     animal["km-traveled"] = total_distance
-            # output object is stored under animal ID
-            identity = animal["individual-local-identifier"]
+            animal = getGeoJSON(lat, lon, animal)
             if identity in animals:
                 animals[identity].append(animal)
             else:
@@ -89,3 +114,10 @@ if __name__ == "__main__":
     with open(outfile, "w") as outfile:
         outfile.write("var {} = {}{}".format(varname, json.dumps(animals), ";"))
         print("Output to: {}".format(outfile))
+
+    # geo_outfile = "{}_GeoJSON.js".format(varname)
+    # with open(geo_outfile, "w") as geo_outfile:
+    #     geo_outfile.write(
+    #         "var {}_GeoJSON = {}{}".format(varname, json.dumps(FEATURE_COLLECTION), ";")
+    #     )
+    #     print("Output to: {}".format(geo_outfile))
