@@ -18,12 +18,14 @@ function stopFlight() {
 }
 
 function startFlight(animalID) {
-	console.log("Selected Animal:", animalID);
+	console.log("\nSelected Animal:", animalID);
 	var animal = window.ANIMALS[animalID];
 	// Update taxon display in top left
 	updateTaxonDisplay(animal);
 	// Order the waypoints chronologically
 	var waypoints = getTimeOrderedWaypoints(animal);
+	// Update duration display in top left
+	updateDurationDisplay(waypoints);
 	// Get the total number of waypoints in this voyage
 	var n_waypoints = waypoints.length;
 	console.log("Waypoints:", n_waypoints);
@@ -52,17 +54,38 @@ function flyToAllWaypoints(waypoints, flight_time) {
 	flyToWaypoint(start_index, flight_time, waypoints);
 }
 
-function updateTimeDisplay(animal) {
-	var timestamp = animal.properties[window.TIMESTAMP_KEY].replace(".000","");
-	document.getElementById("timeDisplay").innerHTML = timestamp;
-}
-
 function updateTaxonDisplay(animal) {
 	var first_record = animal[0];
 	var taxon = first_record.properties[window.TAXON_KEY];
 	var common_name = window.TAXON_MAP[taxon];
 	var text = [common_name, "<br>", "<i>(", taxon, ")</i>"].join("");
 	document.getElementById("taxonDisplay").innerHTML = text;
+}
+
+function updateDurationDisplay(waypoints) {
+	var first_time = waypoints[0].properties[window.TIMESTAMP_KEY];
+	var last_time = waypoints[waypoints.length - 1].properties[window.TIMESTAMP_KEY];
+	var duration = Date.parse(last_time) - Date.parse(first_time);
+	// Convert from milliseconds to hours
+	duration = duration / 3600000;
+	var unit_display = "hours";
+	// If trip is longer than 3 days (72 hours)
+	// then display duration in days instead of hours
+	if (duration > 72) {
+		// Convert from hours to days
+		duration = duration / 24;
+		unit_display = "days";
+	}
+	// Round to 2 decimal places
+	duration = duration.toFixed(2);
+	// Build the output string
+	duration = "Total Time: " + duration + " " + unit_display;
+	document.getElementById("durationDisplay").innerHTML = duration;
+}
+
+function updateTimeDisplay(animal) {
+	var timestamp = animal.properties[window.TIMESTAMP_KEY].replace(".000","");
+	document.getElementById("timeDisplay").innerHTML = timestamp;
 }
 
 function flyToWaypoint(i, flight_time, waypoints, prev_latlon=null) {

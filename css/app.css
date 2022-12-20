@@ -19,8 +19,9 @@ body {
 #progressDisplay {
 	top: 20px;
 }
-#distanceDisplay {
+#durationDisplay {
 	top: 40px;
+	font-size: 16px;
 }
 #taxonDisplay {
 	top: 60px;
