@@ -1,6 +1,8 @@
 # Accessing the Live Project
 
-Live demo: https://eio.github.io/animal-movement
+Video demo: https://www.youtube.com/watch?v=tWhQ8L0fWAk
+
+Live webpage: https://eio.github.io/animal-movement
 
 Requires a valid Mapbox token for loading map imagery.
 
